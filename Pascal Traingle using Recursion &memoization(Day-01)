@@ -1,0 +1,39 @@
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class PascalTriangle {
+    private static Map<String, Integer> memoize = new HashMap<>();
+
+    public static int getPascalNumber(int row, int col) {
+        
+        if (col == 0 || col == row) {
+            return 1;
+        }
+        String key = row + "," + col;
+        if (memoize.containsKey(key)) {
+            return memoize.get(key);
+        }
+        int left = getPascalNumber(row - 1, col - 1);
+        int right = getPascalNumber(row - 1, col);
+
+        int result = left + right;
+        memoize.put(key, result);
+
+        return result;
+    }
+
+    public static void printPascalTriangle(int numRows) {
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j <= i; j++) {
+                System.out.print(getPascalNumber(i, j) + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        int numRows = 5;
+        printPascalTriangle(numRows);
+    }
+}
